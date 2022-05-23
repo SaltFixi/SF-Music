@@ -1,0 +1,56 @@
+$icon1: linear-gradient(to right bottom, #00dbde, #fc00ff);
+$icon2: #aaa;
+@mixin flexC() {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+@mixin flexSb() {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+@mixin flexSa() {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+@mixin flex($fd:row, $jc:center, $ai: center) {
+  display: flex;
+  justify-content: $jc;
+  align-items: $ai;
+  flex-direction: $fd;
+}
+@mixin icon() {
+  background: $icon1;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+@mixin multEllipsis($c:2) {
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: $c;
+  -webkit-box-orient: vertical;
+}
+@mixin singleEllipses {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+@mixin fixed{
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+@mixin btn($w, $h) {
+  width: $w;
+  height: $h;
+  border-radius: 0.5rem;
+  margin: 0.2rem 0;
+  text-align: center;
+  border: solid 0.01rem #fff;
+  cursor: pointer;
+}

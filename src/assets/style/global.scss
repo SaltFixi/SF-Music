@@ -1,0 +1,61 @@
+.flex {
+  display: flex;
+}
+.j-c {
+  justify-content: center;
+}
+.j-s {
+  justify-content: start;
+}
+.j-e {
+  justify-content: end;
+}
+.j-b {
+  justify-content: space-between;
+}
+.j-a {
+  justify-content: space-around;
+}
+.a-c {
+  align-items: center;
+}
+.d-c {
+  flex-direction: column;
+}
+.f-w {
+  flex-wrap: wrap;
+}
+
+.c-p {
+  cursor: pointer;
+}
+
+.icon {
+  width: 50px;
+  height: 50px;
+}
+
+.iconfont {
+  font-size: 35px;
+}
+
+.van-icon {
+  // color: #aaa;
+  font-size: 25px;
+  cursor: pointer;
+}
+
+h2 {
+  font-size: 25px;
+}
+h3 {
+  font-size: 20px;
+}
+
+.van-tab {
+  font-size: 14px;
+}
+
+:root {
+  --van-sticky-z-index: 10;
+}
