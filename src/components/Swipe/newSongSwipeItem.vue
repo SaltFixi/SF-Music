@@ -13,16 +13,12 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
 export default {
   props: {
     newSongList: {
       type: Array,
       require: true
     },
-  },
-  computed: {
-    ...mapState(['curMusicUrl'])
   },
   methods: {
     handlePlaying (item) {

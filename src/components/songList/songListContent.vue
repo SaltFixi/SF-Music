@@ -13,7 +13,7 @@
   </van-sticky>
 
   <div class="song-body">
-    <div class="song-item" @click="playingSong(item)" v-for="item in songs" :key="item.id">
+    <div class="song-item" @click="playingSong(item, index)" v-for="(item, index) in songs" :key="item.id">
       <div class="song-info">
         <!-- 凡是带有fmt的均在plugin/mixin下 -->
         <div class="song-name">{{ fmt30Str(item.name) }}</div>
@@ -35,10 +35,11 @@
 export default {
   props: ['songs'],
   methods: {
-    // 切换歌曲会重新获取音乐,并将图标改为播放状态
-    playingSong (item) {
+    // 切换歌曲会重新获取音乐,并将图标改为播放状态,将音乐列表的索引传过去后面切换歌曲的时候用到
+    playingSong (item, index) {
       this.$store.dispatch('getMusic', item)
       this.$store.commit('setIsShowPlayIcon', true);
+      this.$store.commit('setCurSongsIndex', index)
     }
   },
 }
@@ -46,8 +47,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
-
 .head {
   @include flexSb();
   background-color: #fff;

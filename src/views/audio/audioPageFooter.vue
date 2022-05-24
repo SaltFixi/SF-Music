@@ -7,23 +7,34 @@
           <span class="circle" ref="circle" @mousedown="handleMousedown"></span>
         </div>
       </div>
+      <!-- 时间 -->
       <div class="time">
         <span class="startTime">{{ currentDuration }}</span>
         <span class="endTime">{{ duration }}</span>
       </div>
       <div class="option">
+        <!-- 快退 -->
         <span class="pre" @click="handleBack">
-          <i class="iconfont icon-shangyishou"></i>
+          <i class="iconfont icon-kuaitui1" style="font-size: 20px"></i>
           <span style="color: #c7c7c9; font-size: 13px; margin-left: 10px">-{{ backSecond }}s</span>
         </span>
+
+        <!-- 上一首 -->
+        <i class="iconfont icon-shangyishou" @click="handlePreSong"></i>
+        <!-- 是否播放 -->
         <span class="play" @click="handlePauseOrPlay">
           <i class="iconfont icon-zanting2" style="font-size:50px" v-show="!paused"></i>
           <i class="iconfont icon-yunhang" style="font-size:50px" v-show="paused"></i>
         </span>
+
+        <!-- 下一首 -->
+        <i class="iconfont icon-xiayishou" @click="handleNextSong"></i>
+
+        <!-- 快进 -->
         <span class="next" @click="handleForward">
           <span style="color: #c7c7c9; font-size: 13px; margin-right: 10px">+{{ forwardSecond }}s
           </span>
-          <i class="iconfont icon-xiayishou"></i>
+          <i class="iconfont icon-kuaijin1" style="font-size: 20px"></i>
         </span>
       </div>
     </div>
@@ -31,13 +42,12 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 export default {
-  name: 'index',
   props: {
     audioSrc: {
       type: String,
-      default:
-        'https://img-qn.51miz.com/Audio/2017/02/06/08/20170206081849_A100187_34f7e6b8-thumb.mp3'
+      default: ''
     },
     backSecond: {
       type: Number,
@@ -56,6 +66,9 @@ export default {
       paused: true,
       isMoveIn: false //是否在移动中
     }
+  },
+  computed: {
+    ...mapState(['songslist', 'curSongsIndex'])
   },
   methods: {
     //后退
@@ -91,6 +104,7 @@ export default {
     //进度条发生变化时触发
     updateTime () {
       if (!this.$refs.progress) return
+      this.$store.commit('setCurrentTime', this.audio.currentTime);
       this.currentDuration = this.timeFormat(this.audio.currentTime)
       //如果不是正在移动 和 没有暂停播放就执行
       if (!this.isMoveIn || !this.audio.paused) {
@@ -160,6 +174,16 @@ export default {
       document.addEventListener('mouseup', () => {
         document.removeEventListener('mousemove', move)
       })
+    },
+    // 上一首
+    handlePreSong () {
+      console.log('handlePreSong');
+      // this.$store.dispatch('getMusic', this.songslist[this.curSongsIndex - 1]);
+      console.log(this.songslist[this.curSongsIndex - 1]);
+    },
+    // 下一首
+    handleNextSong () {
+      console.log('handleNextSong');
     }
   }
 }
@@ -219,7 +243,6 @@ export default {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0 30px;
 
     .play,
     .pre,

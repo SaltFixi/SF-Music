@@ -8,6 +8,7 @@
       <i class="iconfont icon-fenxiangzhuanfa"></i>
     </header>
 
+    <!-- 歌曲信息部分 -->
     <transition name="fade">
       <section v-show="!showLrc" @click="showLrc = true" class="audio-content">
         <div class="img-box">
@@ -15,6 +16,7 @@
         </div>
 
         <div class="audio-text">
+          <!-- 歌名 -->
           <div class="song-name">
             <h3 style="color:#fff">{{ playingSong.name }}</h3>
             <div class="standard">标准<i class="iconfont icon-xiajiantou"></i></div>
@@ -28,10 +30,16 @@
       </section>
     </transition>
 
+    <!-- 歌词部分 -->
     <transition name="fade">
       <div v-show="showLrc" @click="showLrc = false" class="showLrc-box">
-        <ul>
+        <ul class="lrc">
           <li v-for="(item, i) in lyricList" :key="i">{{ item[1] }}</li>
+        </ul>
+
+        <!--没歌词的情况-->
+        <ul v-show="!lyricList.length" class="no-lrc">
+          <span>暂无歌词</span>
         </ul>
       </div>
     </transition>
@@ -60,13 +68,41 @@ export default {
     audioPageFooter
   },
   computed: {
-    ...mapState(['playingSong', 'curMusicUrl', 'lyricList'])
-  },
-  methods: {
-
+    ...mapState(['playingSong', 'curMusicUrl', 'currentTime']),
+    lyricList () {
+      return this.$store.state.lyricList
+    }
   },
   mounted () {
-    console.log(this.lyricList);
+    console.log('lyricList', this.lyricList);
+  },
+  watch: {
+    currentTime () {
+      // console.log(this.currentTime);
+      // 处理正播放的歌词
+      if (this.lyricList.length !== 0) {
+        for (let i = 0; i < this.lyricList.length; i++) {
+          const lrc = document.querySelectorAll('.lrc li')
+          // 判断当前歌曲播放的时间是否在 this.lyricList 的一个区间
+          if (this.currentTime >= this.lyricList[i][0] &&
+            this.currentTime <= this.lyricList[i + 1][0]) {
+            // 在这个区间的话，就将其他区间的active类去除掉，保留这个区间的active类
+            for (let j = 0; j < this.lyricList.length; j++) {
+              if (lrc[j].classList.contains('active'))
+                lrc[j].classList.remove('active')
+              lrc[i].classList.add('active')
+            }
+          }
+        }
+      }
+      // 处理正播放歌词的位置及滚动条
+      // 由于给.showLrc-box类设置了overflow: scroll;所有要拿到它的类
+      const showLrcBox = document.querySelector('.showLrc-box')
+      const active = document.querySelector('.lrc li.active')
+      if (active?.offsetTop > 260) {
+        showLrcBox.scrollTop = active.offsetTop - 260
+      }
+    }
   }
 };
 </script>
@@ -131,6 +167,10 @@ export default {
       @include flexSb();
     }
 
+    .author {
+      margin-top: 5px
+    }
+
     .standard {
       @include flexSa();
       border: 2px solid #fff;
@@ -157,9 +197,25 @@ export default {
       font-size: 15px;
       margin: 3px 0;
       text-align: center;
-      color: rgb(232, 225, 225);
+      color: rgb(183, 178, 178);
     }
+
+
+    .active {
+      font-size: 25px !important;
+      color: #fff !important;
+    }
+
+    .no-lrc {
+      @include fixed();
+      top: 40%;
+      text-align: center;
+      font-size: 30px;
+      color: #fff;
+    }
+
   }
+
 
   .iconList {
     position: fixed;

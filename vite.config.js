@@ -36,7 +36,7 @@ export default defineConfig({
   },
   plugins: [
     vue(),
-    // vite导入vant可能会报错，路径是在vant/es下
+    // 通过cnpm install的方式安装的vite导入vant可能会报错，路径是在vant/es下
     styleImport({
       resolves: [VantResolve()],
       // libs: [
@@ -44,7 +44,7 @@ export default defineConfig({
       //     libraryName: 'vant',
       //     esModule: true,
       //     resolveStyle: (name) => {
-      //       return `..vant/es/${name}/style/index`
+      //       return `../es/${name}/style/index`
       //     }
       //   },
       // ],

@@ -15,8 +15,7 @@ const filters = {
 export default (app) => app.mixin({
   methods: {
     ...request,
-    ...filters,
-    parseLyric
+    ...filters
   },
 })
 

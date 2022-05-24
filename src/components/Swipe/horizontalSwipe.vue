@@ -1,9 +1,9 @@
 <template>
-
   <subHead title="推荐歌单" />
+
   <van-skeleton title :row="5" :loading="loading">
     <van-swipe class="my-swipe" :loop="false" :width="w" :show-indicators="false">
-      <van-swipe-item v-for="item in state.recomList" @click="toSongsList(item.id)" :key="item.id">
+      <van-swipe-item v-for="item in recomList" @click="toSongsList(item.id)" :key="item.id">
         <div class="swipe-item">
           <div class="img-body">
             <img :src="item.picUrl" alt="" />
@@ -21,18 +21,19 @@
       </van-swipe-item>
     </van-swipe>
   </van-skeleton>
-
 </template>
 
 <script setup>
 import subHead from 'coms/subHead/subHead.vue'
-import { onMounted, reactive, ref } from '@vue/runtime-core'
+import { onMounted, reactive, ref, toRefs } from '@vue/runtime-core'
 import { getRecomList } from 'api/api.js'
 import { useRouter } from 'vue-router'
 
 const state = reactive({
   recomList: [],
 })
+
+const { recomList } = toRefs(state)
 const loading = ref(true);
 
 onMounted(async () => {

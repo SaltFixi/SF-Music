@@ -70,6 +70,7 @@ export default {
   margin-top: 60px;
 }
 
+/*-------------------背景虚化------------------------ */
 .bg-blur {
   @include fixed();
   position: absolute;
@@ -90,6 +91,8 @@ export default {
   background-color: skyblue;
   filter: blur(15px);
 }
+
+/*------------------------------------------- */
 
 .song-head {
   @include fixed();

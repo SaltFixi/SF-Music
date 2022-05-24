@@ -1,13 +1,13 @@
 import {
   Button, Icon, Swipe, SwipeItem, Tab, Tabs,
   NoticeBar, Toast, Sticky, Col, Row, Skeleton,
-  Tabbar, TabbarItem, Popup, Lazyload
+  Tabbar, TabbarItem, Lazyload
 } from 'vant';
 
 let vants = [
   Button, Icon, Swipe, SwipeItem, Tab, Tabs,
   NoticeBar, Toast, Sticky, Col, Row, Skeleton,
-  Tabbar, TabbarItem, Popup, Lazyload
+  Tabbar, TabbarItem, Lazyload
 ]
 
 export default function getVant (app) {

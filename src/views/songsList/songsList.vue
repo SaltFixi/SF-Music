@@ -28,10 +28,11 @@ export default {
       let data = {
         id: playlistId,
       }
-
       // 传递给songs的数据需要修改一下毕竟
       // getNewSong的数据与getPlayListTrack的数据有所不同
       const { songs } = await getPlayListTrack(data)
+      store.commit('setSongslist', songs)
+
       songs.forEach((item) => {
         state.songs.push({
           'name': item.name,

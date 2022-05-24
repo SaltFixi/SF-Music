@@ -39,10 +39,8 @@ export default {
     @include flexSa();
 
     li {
-      display: flex;
+      @include flexSb();
       flex-direction: column;
-      align-items: center;
-      justify-content: space-between;
       cursor: pointer;
     }
   }
