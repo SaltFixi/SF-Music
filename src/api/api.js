@@ -14,3 +14,7 @@ export const getNewSong = ({ limit }) => $get('/personalized/newsong', { limit }
 export const getSongUrl = (id) => $get('/song/url', { id })
 // 获取歌词
 export const getLyric = (id) => $get('/lyric', { id })
+// 获取热搜榜
+export const getSearchHot = () => $get('/search/hot')
+// 获取搜索关键词
+export const getSearchKey = (keywords) => $get('/cloudsearch', { keywords })

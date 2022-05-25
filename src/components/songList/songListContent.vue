@@ -1,5 +1,5 @@
 <template>
-  <van-sticky :offset-top="50">
+  <van-sticky :offset-top="50" v-if="showSticky">
     <div class="head">
       <div class="head-lf">
         <i class="iconfont icon-bofang"></i>
@@ -33,7 +33,16 @@
 <script>
 
 export default {
-  props: ['songs'],
+  props: {
+    songs: {
+      type: Array,
+      require: true
+    },
+    showSticky: {
+      type: Boolean,
+      default: true
+    }
+  },
   methods: {
     // 切换歌曲会重新获取音乐,并将图标改为播放状态,将音乐列表的索引传过去后面切换歌曲的时候用到
     playingSong (item, index) {

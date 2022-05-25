@@ -18,6 +18,7 @@ onMounted(() => {
     state.images = res.banners
   })
 })
+
 </script>
 
 <style lang="scss">

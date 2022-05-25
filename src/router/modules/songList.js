@@ -15,9 +15,4 @@ export default [
     name: "newSongList",
     component: () => import('views/songsList/newSongList.vue'),
   },
-  {
-    path: '/audio',
-    name: "audio",
-    component: () => import('views/audio/audioPage.vue'),
-  }
 ];

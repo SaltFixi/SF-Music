@@ -11,6 +11,7 @@ import songListFooter from 'coms/songList/songListFooter.vue'
 import { reactive } from '@vue/reactivity';
 import { getNewSong } from 'api/api.js';
 import { onMounted, toRefs } from '@vue/runtime-core';
+import { useStore } from 'vuex';
 export default {
   components: {
     newSongListTop,
@@ -23,6 +24,7 @@ export default {
       songs: []
     })
 
+    const store = useStore()
     onMounted(async () => {
       const { result } = await getNewSong({ limit: 30 })
 
@@ -36,6 +38,8 @@ export default {
           'id': item.id,
         })
       })
+      store.commit('setSongslist', state.songs)
+
     })
 
     return {

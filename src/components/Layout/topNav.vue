@@ -5,14 +5,20 @@
     </h2>
     <div class="c-p">
       <slot name="rg">
-        <van-icon name="search" />
+        <van-icon name="search" @click="search" />
       </slot>
     </div>
   </header>
 </template>
 
 <script>
-export default {}
+export default {
+  methods: {
+    search () {
+      this.$router.push({ name: 'search' })
+    }
+  }
+}
 </script>
 
 <style lang="scss" scoped>

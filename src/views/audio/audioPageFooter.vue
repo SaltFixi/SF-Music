@@ -1,6 +1,7 @@
 <template>
   <div class="container">
-    <audio @canplay="getDuration" controls @timeupdate="updateTime" v-show="false" ref="audio" :src="audioSrc" />
+    <audio @canplay="getDuration" preload="load" controls @timeupdate="updateTime" v-show="false" ref="audio"
+      :src="audioSrc" />
     <div class="card">
       <div class="progress" ref="progress" @click="clickProgress" @mouseup="handleMouseup">
         <div class="currentProgress" ref="currentProgress">
@@ -68,7 +69,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(['songslist', 'curSongsIndex'])
+    ...mapState(['songslist', 'curSongsIndex', 'curDuration'])
   },
   methods: {
     //后退
@@ -91,6 +92,7 @@ export default {
     //视频在可以播放时触发
     getDuration () {
       this.duration = this.timeFormat(this.$refs.audio.duration)
+      this.$store.commit('setCurDuration', this.duration);
       this.audio = this.$refs.audio
     },
     //将单位为秒的的时间转换成mm:ss的形式
@@ -177,13 +179,40 @@ export default {
     },
     // 上一首
     handlePreSong () {
-      console.log('handlePreSong');
-      // this.$store.dispatch('getMusic', this.songslist[this.curSongsIndex - 1]);
-      console.log(this.songslist[this.curSongsIndex - 1]);
+      // 样式重置
+      this.paused = true
+      this.currentDuration = '00:00'
+      this.$refs.circle.style.left = 0 + 'px'
+      this.$refs.currentProgress.style.width = 0 + 'px'
+      // 将 songslist 索引号-1，及切换上一首
+      if (this.curSongsIndex !== -1 && this.songslist.length > 1) {
+        if (this.curSongsIndex > 1) {
+          this.$store.commit('setCurSongsIndex', this.curSongsIndex - 1);
+          this.$store.dispatch('getMusic', this.songslist[this.curSongsIndex - 1]);
+        } else {
+          this.$store.commit('setCurSongsIndex', this.songslist.length - 1);
+          this.$store.dispatch('getMusic', this.songslist[this.songslist.length - 1]);
+        }
+      }
     },
     // 下一首
     handleNextSong () {
-      console.log('handleNextSong');
+      // 样式重置
+      this.paused = true
+      this.currentDuration = '00:00'
+      this.$refs.circle.style.left = 0 + 'px'
+      this.$refs.currentProgress.style.width = 0 + 'px'
+      // 将 songslist 索引号+1，及切换下一首
+      console.log(this.songslist);
+      if (this.curSongsIndex !== -1 && this.songslist.length > 1) {
+        if (this.curSongsIndex < this.songslist.length - 1) {
+          this.$store.commit('setCurSongsIndex', this.curSongsIndex + 1);
+          this.$store.dispatch('getMusic', this.songslist[this.curSongsIndex + 1]);
+        } else {
+          this.$store.commit('setCurSongsIndex', 0);
+          this.$store.dispatch('getMusic', this.songslist[0]);
+        }
+      }
     }
   }
 }

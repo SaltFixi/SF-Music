@@ -1,6 +1,7 @@
 <template>
   <div class="auido animate__animated animate__slideInUp">
-    <div class="bg-blur" :style="{ backgroundImage: 'url(' + playingSong.alias.picUrl + ')' }"></div>
+    <div class="bg-blur"
+      :style="{ backgroundImage: 'url(' + playingSong?.alias?.picUrl ? playingSong?.alias?.picUrl : '' + ')' }"></div>
     <div class="bg2"></div>
 
     <header class="auido-head">
@@ -12,18 +13,18 @@
     <transition name="fade">
       <section v-show="!showLrc" @click="showLrc = true" class="audio-content">
         <div class="img-box">
-          <img :src="playingSong.alias.picUrl" alt="">
+          <img :src="playingSong?.alias?.picUrl ? playingSong?.alias?.picUrl : ''" alt="">
         </div>
 
         <div class="audio-text">
           <!-- 歌名 -->
           <div class="song-name">
-            <h3 style="color:#fff">{{ playingSong.name }}</h3>
+            <h3 style="color:#fff">{{ playingSong?.name }}</h3>
             <div class="standard">标准<i class="iconfont icon-xiajiantou"></i></div>
           </div>
           <!-- 作者 -->
           <div class="author">
-            <div v-for="auth in playingSong.author" :key="auth.id">{{ auth.name }}</div>
+            <div v-for="auth in playingSong?.author" :key="auth?.id">{{ auth?.name }}</div>
           </div>
         </div>
         <IconList class="iconList" :data="palyingList" FontBackground="#fff" />
@@ -56,11 +57,12 @@ import { mapState } from 'vuex'
 import IconList from 'coms/IconList/IconList.vue';
 import audioPageFooter from './audioPageFooter.vue'
 import { palyingList } from 'icon/iconList.js';
+import store from '../../store';
 export default {
   data () {
     return {
       palyingList,
-      showLrc: false
+      showLrc: false,
     }
   },
   components: {
@@ -68,10 +70,7 @@ export default {
     audioPageFooter
   },
   computed: {
-    ...mapState(['playingSong', 'curMusicUrl', 'currentTime']),
-    lyricList () {
-      return this.$store.state.lyricList
-    }
+    ...mapState(['playingSong', 'curMusicUrl', 'lyricList', 'currentTime', 'duration']),
   },
   mounted () {
     console.log('lyricList', this.lyricList);
@@ -95,6 +94,7 @@ export default {
           }
         }
       }
+
       // 处理正播放歌词的位置及滚动条
       // 由于给.showLrc-box类设置了overflow: scroll;所有要拿到它的类
       const showLrcBox = document.querySelector('.showLrc-box')
