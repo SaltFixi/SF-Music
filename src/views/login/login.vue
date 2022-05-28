@@ -45,6 +45,7 @@ import { sentCaptcha, verifyCaptcha, loginCellphone } from 'api/api.js'
 import { useRouter } from 'vue-router'
 import md5 from 'js-md5';
 import { useStore } from 'vuex'
+import storage from 'utils/storage.js';
 export default {
   setup () {
     const phone = ref('13789912055') // 手机号
@@ -76,10 +77,18 @@ export default {
         count.value = TIME_COUNT
         resend.value = false
         timer = setInterval(() => {
+          if (count.value == 0) {
+            resend.value = true
+            captcha.value = ''
+            clearInterval(timer)
+            timer = null
+            return
+          }
           count.value--
         }, 1000)
       } else {
         resend.value = true
+        captcha.value = ''
         clearInterval(timer)
         timer = null
       }
@@ -104,7 +113,7 @@ export default {
             Toast({ message: '请输入手机号或验证码', position: 'bottom' })
             return
           }
-          const res = await verifyCaptcha({ phone: values.phone, captcha: values.phone })
+          const res = await loginCellphone({ phone: values.phone, captcha: values.captcha })
           data = res
         } else { // 密码登录
           if (!values.phone || !values.password) {
@@ -118,10 +127,12 @@ export default {
         console.log('data', data);
         if (data.code === 200) {
           store.dispatch('userInfo/setInfo', data);
+          // 将数据存储在本地
+          storage.set('userInfo', data)
           router.replace({ path: '/home' })
           msg = '登录成功'
         } else {
-          msg = data.msg
+          msg = data.message
         }
         Toast({ message: msg, position: 'bottom' })
 

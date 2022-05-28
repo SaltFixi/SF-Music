@@ -24,5 +24,7 @@ export const getVideoRecom = () => $get('/video/timeline/recommend?offset=10')
 export const sentCaptcha = (phone) => $get('/captcha/sent', { phone })
 // 验证验证码
 export const verifyCaptcha = (data) => $get('/captcha/verify', { phone: data.phone, captcha: data.captcha })
-// 手机号密码登录
-export const loginCellphone = (data) => $get('/login/cellphone', { phone: data.phone, md5_password: data.md5_password })
+// 手机登录
+export const loginCellphone = (data) => $get('/login/cellphone', { phone: data.phone, md5_password: data.md5_password, captcha: data.captcha })
+// 获取用户歌单
+export const userPlaylist = (uid) => $get('/user/playlist', { uid })

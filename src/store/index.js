@@ -18,8 +18,7 @@ const store = new createStore({
       name: "一分一寸"
     },
     playingSongId: 1804614734, // 播放中歌曲的id
-    // 当前音乐的url
-    curMusicUrl: "http://m801.music.126.net/20220522204216/6d2599dd947eb99bd8089f2503f100ae/jdymusic/obj/wo3DlMOGwrbDjj7DisKw/14096589503/36ed/fee5/d4f3/0169016949ddc614c8fea3a8ff8c7b2f.mp3",
+    curMusicUrl: "", // 当前音乐的url
     isShowPlayIcon: true, // 是否显示播放图标
     lyricList: [], // 歌词列表
     currentTime: 0, // 当前歌曲播放的时间
@@ -94,23 +93,27 @@ const store = new createStore({
     userInfo
   },
   // 数据持久化，防止页面刷新数据丢失
-  plugins: [createPersistedState({
-    storage: window.sessionStorage,
-    reducer (state) {
-      return {
-        playingSong: state.playingSong,
-        songslist: state.songslist,
-        curMusicUrl: state.curMusicUrl,
-        isShowPlayIcon: state.isShowPlayIcon,
-        lyricList: state.lyricList,
-        curSongsIndex: state.curSongsIndex,
-        userInfo: {
-          loginState: state.userInfo.loginState,
+  plugins: [
+    createPersistedState({
+      storage: window.sessionStorage,
+      key: 'play',
+      reducer (state) {
+        return {
+          playingSong: state.playingSong,
+          songslist: state.songslist,
+          curMusicUrl: state.curMusicUrl,
+          isShowPlayIcon: state.isShowPlayIcon,
+          lyricList: state.lyricList,
+          curSongsIndex: state.curSongsIndex,
         }
-      }
-    },
-
-  })]
+      },
+    }),
+    // createPersistedState({
+    //   storage: window.localStorage,
+    //   key: 'userInfo',
+    //   paths: ['userInfo']
+    // })
+  ]
 });
 
 export default store

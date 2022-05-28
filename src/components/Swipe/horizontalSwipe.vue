@@ -31,12 +31,13 @@ defineProps({
 })
 
 const loading = ref(true);
+const w = ref(window.screen.width / 4)
 
 onMounted(() => {
+  w.value = parseInt((window.screen.width / 4))
   loading.value = false
 })
 
-const w = ref(window.screen.width / 4)
 
 window.addEventListener('resize', () => {
   w.value = parseInt((window.screen.width / 4))

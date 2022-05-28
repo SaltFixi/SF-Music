@@ -1,6 +1,6 @@
 <template>
   <header class="subHead">
-    <h2 class="title">{{ title }}</h2>
+    <h3 class="title">{{ title }}</h3>
     <div class="arrow" @click="$emit('handleMore')">
       <van-icon name="arrow" size="14" />
     </div>

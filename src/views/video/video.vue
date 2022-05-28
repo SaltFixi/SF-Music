@@ -6,6 +6,7 @@
 
     <IconList :data="videoList" />
 
+    <recomVideoSwipe />
     <Footer />
   </div>
 </template>
@@ -16,6 +17,7 @@ import Swipe from 'coms/Swipe/Swipe.vue'
 import IconList from 'coms/IconList/IconList.vue'
 import Footer from 'coms/Layout/Footer.vue';
 import { videoList } from 'icon/iconList.js';
+import recomVideoSwipe from './components/recomVideoSwipe.vue';
 
 </script>
 
