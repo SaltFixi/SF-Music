@@ -2,13 +2,13 @@
   <div class="home">
     <topNav />
 
-    <Swipe />
+    <Swipe type="1" />
 
     <IconList :data="homeList" />
 
     <Promotion />
 
-    <horizontalSwipe />
+    <recomPlayListSwipe />
 
     <newSongSwipe />
 
@@ -23,8 +23,8 @@ import Swipe from 'coms/Swipe/Swipe.vue'
 import IconList from 'coms/IconList/IconList.vue'
 import Promotion from 'views/home/components/Promotion.vue'
 import { homeList } from 'icon/iconList.js'
-import horizontalSwipe from 'coms/Swipe/horizontalSwipe.vue'
-import newSongSwipe from 'coms/Swipe/newSongSwipe.vue'
+import recomPlayListSwipe from './components/recomPlayListSwipe.vue';
+import newSongSwipe from './components/newSongSwipe.vue';
 import songListFooter from 'coms/songList/songListFooter.vue'
 import Footer from 'coms/Layout/Footer.vue'
 </script>

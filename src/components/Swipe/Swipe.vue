@@ -1,7 +1,7 @@
 <template>
   <van-swipe :autoplay="3000" lazy-render>
-    <van-swipe-item v-for="image in state.images" :key="image.bannerId">
-      <img :src="image.pic" />
+    <van-swipe-item v-for="banner in state.banners" :key="banner.bannerId">
+      <img :src="banner.pic" />
     </van-swipe-item>
   </van-swipe>
 </template>
@@ -9,13 +9,15 @@
 <script setup>
 import { getBanner } from 'api/api.js'
 import { onMounted, reactive } from 'vue'
+
+const props = defineProps(['type'])
 const state = reactive({
-  images: []
+  banners: []
 })
 
 onMounted(() => {
-  getBanner().then((res) => {
-    state.images = res.banners
+  getBanner(props.type).then((res) => {
+    state.banners = res.banners
   })
 })
 

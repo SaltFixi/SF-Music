@@ -36,10 +36,11 @@ instance.interceptors.response.use(
   },
   function (error) {
     // console.log('响应失败，错误为', err.message)
-    Toast('服务器错误！');
-    setTimeout(() => {
-      window.location.replace(location.href)
-    }, 1000);
+    // Toast('服务器错误！');
+    // setTimeout(() => {
+    //   window.location.replace(location.href)
+    // }, 1000);
+    console.log(error);
     return Promise.reject(error)
   }
 )

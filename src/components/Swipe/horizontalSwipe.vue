@@ -1,9 +1,7 @@
 <template>
-  <subHead title="推荐歌单" />
-
   <van-skeleton title :row="5" :loading="loading">
     <van-swipe class="my-swipe" :loop="false" :width="w" :show-indicators="false">
-      <van-swipe-item v-for="item in recomList" @click="toSongsList(item.id)" :key="item.id">
+      <van-swipe-item v-for="item in recomList" @click="clickTo(item.id)" :key="item.id">
         <div class="swipe-item">
           <div class="img-body">
             <img :src="item.picUrl" alt="" />
@@ -24,23 +22,17 @@
 </template>
 
 <script setup>
-import subHead from 'coms/subHead/subHead.vue'
-import { onMounted, reactive, ref, toRefs } from '@vue/runtime-core'
-import { getRecomList } from 'api/api.js'
-import { useRouter } from 'vue-router'
-
-const state = reactive({
-  recomList: [],
+import { onMounted, ref, defineEmits, defineProps } from '@vue/runtime-core'
+defineProps({
+  recomList: {
+    type: Array,
+    require: true
+  }
 })
 
-const { recomList } = toRefs(state)
 const loading = ref(true);
 
-onMounted(async () => {
-  const { result } = await getRecomList()
-  // console.log(result)
-  state.recomList = result
-
+onMounted(() => {
   loading.value = false
 })
 
@@ -50,9 +42,10 @@ window.addEventListener('resize', () => {
   w.value = parseInt((window.screen.width / 4))
 })
 
-const router = useRouter()
-const toSongsList = (id) => {
-  router.push({ name: 'songsList', query: { playlistId: id } })
+const emit = defineEmits(['clickTo'])
+
+const clickTo = (id) => {
+  emit('clickTo', id)
 }
 
 </script>

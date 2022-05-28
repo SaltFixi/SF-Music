@@ -2,6 +2,7 @@ import { createStore } from 'vuex';
 import { getSongUrl, getLyric } from 'api/api.js';
 import createPersistedState from "vuex-persistedstate";
 import { parseLyric } from '../plugin/mixin';
+import userInfo from './userInfo';
 
 const store = new createStore({
   state: () => ({
@@ -89,7 +90,9 @@ const store = new createStore({
       }
     },
   },
-  modules: {},
+  modules: {
+    userInfo
+  },
   // 数据持久化，防止页面刷新数据丢失
   plugins: [createPersistedState({
     storage: window.sessionStorage,
@@ -101,8 +104,12 @@ const store = new createStore({
         isShowPlayIcon: state.isShowPlayIcon,
         lyricList: state.lyricList,
         curSongsIndex: state.curSongsIndex,
+        userInfo: {
+          loginState: state.userInfo.loginState,
+        }
       }
-    }
+    },
+
   })]
 });
 

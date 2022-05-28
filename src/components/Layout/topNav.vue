@@ -1,7 +1,7 @@
 <template>
   <header class="header">
     <h2>
-      <slot name="lf">推荐</slot>
+      <slot name="lf">{{ title }}</slot>
     </h2>
     <div class="c-p">
       <slot name="rg">
@@ -13,6 +13,12 @@
 
 <script>
 export default {
+  props: {
+    title: {
+      type: String,
+      default: '推荐'
+    }
+  },
   methods: {
     search () {
       this.$router.push({ name: 'search' })

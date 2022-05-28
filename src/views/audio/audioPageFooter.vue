@@ -86,8 +86,10 @@ export default {
     },
     //暂停或播放
     handlePauseOrPlay () {
-      this.audio.paused ? this.audio.play() : this.audio.pause()
-      this.paused = !this.paused
+      if (this.audio) {
+        this.audio.paused ? this.audio.play() : this.audio.pause()
+        this.paused = !this.paused
+      }
     },
     //视频在可以播放时触发
     getDuration () {
