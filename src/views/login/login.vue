@@ -54,7 +54,7 @@ export default {
     const resend = ref(true) // 重复发送验证码
     const count = ref(0) // 倒计时
     const isPwdLogin = ref(false) // 是否切换密码登录
-    const password = ref('531723263') // 密码
+    const password = ref('') // 密码
     const router = useRouter()
     const store = useStore()
 
