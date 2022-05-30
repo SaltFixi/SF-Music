@@ -22,6 +22,8 @@ import { reactive } from '@vue/reactivity';
 import { getPlayListTrack } from 'api/api.js';
 import { onMounted, toRefs } from '@vue/runtime-core';
 import { useRoute } from 'vue-router';
+import { useStore } from 'vuex';
+
 export default {
   components: {
     songListTop,
@@ -35,7 +37,7 @@ export default {
       desc: {}
     })
 
-
+    const store = useStore()
     onMounted(async () => {
       const query = useRoute().query
       state.desc = query
@@ -50,6 +52,8 @@ export default {
           'id': item.id,
         })
       })
+
+      store.commit('setSongslist', state.songs)
     })
 
     return {
