@@ -9,16 +9,15 @@ export default defineConfig({
   server: {
     port: 8080,
     open: true,
-    post: '0.0.0.0',
-    proxy: {
-      '/api/': {
-        changeOrigin: true,
-        target: "localhost:0.0.0.0",
-        rewrite: {
-          '^/api/': ''
-        }
-      }
-    }
+    // proxy: {
+    //   '/api/': {
+    //     changeOrigin: true,
+    //     target: "localhost:0.0.0.0",
+    //     rewrite: {
+    //       '^/api/': ''
+    //     }
+    //   }
+    // }
   },
   // 更改别名
   resolve: {
