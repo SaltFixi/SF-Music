@@ -3,9 +3,9 @@
 
   <van-skeleton title :row="5" :loading="loading">
     <van-swipe :loop="false" :width="320" :show-indicators="false" class="newSong">
-      <multiSwipeItem :newSongList="newSongList.slice(0, 3)" @play="handlePlay" />
-      <multiSwipeItem :newSongList="newSongList.slice(3, 6)" />
-      <multiSwipeItem :newSongList="newSongList.slice(6, 9)" />
+      <multiSwipeItem :songList="newSongList.slice(0, 3)" @play="handlePlay" />
+      <multiSwipeItem :songList="newSongList.slice(3, 6)" />
+      <multiSwipeItem :songList="newSongList.slice(6, 9)" />
     </van-swipe>
   </van-skeleton>
 </template>

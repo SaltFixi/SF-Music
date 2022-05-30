@@ -1,11 +1,11 @@
 <template>
-  <songListTop :playlist="playlist" />
+  <recomPlayListTop :playlist="playlist" />
   <songListContent :songs="songs" />
   <songListFooter />
 </template>
 
 <script>
-import songListTop from 'coms/songList/songListTop.vue'
+import recomPlayListTop from 'coms/songList/recomPlayListTop.vue'
 import songListContent from 'coms/songList/songListContent.vue'
 import songListFooter from 'coms/songList/songListFooter.vue'
 import { onMounted, reactive, toRefs } from '@vue/runtime-core'
@@ -50,7 +50,7 @@ export default {
   },
   props: ['playlistId'],
   components: {
-    songListTop,
+    recomPlayListTop,
     songListContent,
     songListFooter
   }

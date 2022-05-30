@@ -48,7 +48,6 @@ export default {
 
         if (res.code == 200) {
           state.recomList = res.datas
-          console.log(res.datas);
         }
       }, (err) => {
         console.log(err);

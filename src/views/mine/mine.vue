@@ -10,7 +10,7 @@
     </topNav>
 
     <van-popup v-model:show="showPopup" position="bottom" :style="{ height: '20%' }">
-      <van-button class="setting-btn" color="#C3A9F6" block>注销账号</van-button>
+      <van-button class="setting-btn" color="#C3A9F6" block @click="$router.push({ name: 'login' })">切换账号</van-button>
       <van-button class="setting-btn" color="#C3A9F6" block @click="logout">退出登录</van-button>
     </van-popup>
 
@@ -46,7 +46,7 @@
 
     <h3 style="margin:20px 0">我的喜欢</h3>
     <div class="love-music">
-      <div class="flex">
+      <div class="flex" @click="toLoveMusic(loveMusic.id)">
         <img class="love-img" :src="loveMusic.coverImgUrl" alt="">
         <div>
           <div>{{ loveMusic.name ? loveMusic.name : '喜欢的音乐' }}</div>
@@ -59,9 +59,8 @@
 
     <!-- 创建歌单 -->
     <h3 style="margin:20px 0">歌单</h3>
-    <playlist :playlist="createPalyList" />
-    <playlist :playlist="collectPlaylist" :showPlus="false" :showNickName="true" />
-
+    <songlist :songlist="createPlaylist" @toMySongList="toCreatePlaylist" />
+    <songlist :songlist="collectPlaylist" :showPlus="false" :showNickName="true" @toMySongList="toCollectPlaylist" />
 
     <songListFooter style="bottom:60px" />
     <Footer />
@@ -73,7 +72,7 @@ import topNav from 'coms/Layout/topNav.vue';
 import Footer from 'coms/Layout/Footer.vue';
 import IconList from 'coms/IconList/IconList.vue';
 import songListFooter from 'coms/songList/songListFooter.vue';
-import playlist from './components/playlist.vue';
+import songlist from './components/songlist.vue';
 import { userPlaylist } from 'api/api.js';
 import { mineList1, mineList2 } from 'icon/iconList.js';
 import { mapState } from 'vuex';
@@ -84,7 +83,7 @@ export default {
     topNav,
     IconList,
     songListFooter,
-    playlist
+    songlist
   },
   computed: {
     ...mapState('userInfo', ['loginState', 'userProfile', 'userId'])
@@ -95,18 +94,46 @@ export default {
       mineList2,
       showPopup: false,
       loveMusic: {},
-      createPalyList: [],
+      createPlaylist: [],
       collectPlaylist: []
     }
-  },
-  mounted () {
-    console.log(localStorage.getItem('userInfo'));
   },
   methods: {
     logout () {
       this.$store.dispatch('userInfo/cleanInfo');
       storage.del('userInfo')
       this.showPopup = false
+      this.$router.go(0)
+    },
+    toLoveMusic (id) {
+      const query = {
+        'id': id,
+        'title': this.loveMusic.name,
+        'nickname': this.loveMusic.creator.nickname,
+        'creatorImg': this.loveMusic.creator.avatarUrl,
+        'playCount': this.loveMusic.playCount
+      }
+      this.$router.push({ name: 'mySongList', query: query })
+    },
+    toCreatePlaylist ({ id, index }) {
+      const query = {
+        'id': id,
+        'title': this.createPlaylist[index].name,
+        'nickname': this.createPlaylist[index].creator.nickname,
+        'creatorImg': this.createPlaylist[index].creator.avatarUrl,
+        'playCount': this.createPlaylist[index].playCount
+      }
+      this.$router.push({ name: 'mySongList', query: query })
+    },
+    toCollectPlaylist ({ id, index }) {
+      const query = {
+        'id': id,
+        'title': this.collectPlaylist[index].name,
+        'nickname': this.collectPlaylist[index].creator.nickname,
+        'creatorImg': this.collectPlaylist[index].creator.avatarUrl,
+        'playCount': this.collectPlaylist[index].playCount
+      }
+      this.$router.push({ name: 'mySongList', query: query })
     }
   },
   watch: {
@@ -121,13 +148,13 @@ export default {
             this.loveMusic = res.playlist[0]
             res.playlist.forEach((item) => {
               if (item.userId === this.userId) {
-                this.createPalyList.push(item)
+                this.createPlaylist.push(item)
               } else {
                 this.collectPlaylist.push(item)
               }
             })
             // 删除第一项数据
-            this.createPalyList.shift()
+            this.createPlaylist.shift()
           })
         }
       }

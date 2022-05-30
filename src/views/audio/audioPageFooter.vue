@@ -86,7 +86,7 @@ export default {
     },
     //暂停或播放
     handlePauseOrPlay () {
-      if (this.audio) {
+      if (this.audio !== '') {
         this.audio.paused ? this.audio.play() : this.audio.pause()
         this.paused = !this.paused
       }
@@ -108,6 +108,7 @@ export default {
     //进度条发生变化时触发
     updateTime () {
       if (!this.$refs.progress) return
+
       this.$store.commit('setCurrentTime', this.audio.currentTime);
       this.currentDuration = this.timeFormat(this.audio.currentTime)
       //如果不是正在移动 和 没有暂停播放就执行

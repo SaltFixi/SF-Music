@@ -1,7 +1,5 @@
 import Cookies from "js-cookie";
 import storage from 'utils/storage.js';
-import createPersistedState from "vuex-persistedstate";
-
 
 export default {
   namespaced: true,

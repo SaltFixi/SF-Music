@@ -1,19 +1,19 @@
 <template>
   <!-- 收藏歌单 -->
-  <div class="playlist">
+  <div class="songlist">
     <!-- 创建歌单头部内容 -->
     <div class="flex a-c j-b">
-      <span style="color:#bbb">创建歌单({{ playlist.length }}个)</span>
+      <span style="color:#bbb">创建歌单({{ songlist.length }}个)</span>
       <div style="color:#ccc">
         <van-icon name="plus" size="20" style="margin-right:10px" v-if="showPlus" />
         <van-icon name="ellipsis" size="20" style="transform:rotate(90deg)" />
       </div>
     </div>
     <!-- 创建歌单内容区域 -->
-    <div class="playlist-content">
+    <div class="songlist-content">
       <ul>
-        <li v-for="item in playlist" :key="item.id">
-          <div class="flex a-c">
+        <li v-for="(item, index) in songlist" :key="item.id">
+          <div class="flex a-c" @click="$emit('toMySongList', { id: item.id, index: index })">
             <img :src="item.coverImgUrl" alt="">
             <div style="margin-left:10px">
               {{ item.name }}
@@ -32,7 +32,7 @@
 <script>
 export default {
   props: {
-    playlist: {
+    songlist: {
       type: Array,
       require: true
     },
@@ -44,12 +44,13 @@ export default {
       type: Boolean,
       default: false
     }
-  }
+  },
+  emits: ['toMySongList']
 };
 </script>
 
 <style lang="scss" scoped>
-.playlist {
+.songlist {
   width: 90%;
   padding: 15px 20px;
   margin-bottom: 10px;
@@ -57,7 +58,7 @@ export default {
   border-radius: 8px;
 }
 
-.playlist-content {
+.songlist-content {
   ul li {
     @include flexSb();
     margin: 10px 0;

@@ -48,7 +48,7 @@ import { useStore } from 'vuex'
 import storage from 'utils/storage.js';
 export default {
   setup () {
-    const phone = ref('13789912055') // 手机号
+    const phone = ref('') // 手机号
     const captcha = ref('') // 验证码
     const send = ref(true) // 发送验证码
     const resend = ref(true) // 重复发送验证码
@@ -128,7 +128,7 @@ export default {
         if (data.code === 200) {
           store.dispatch('userInfo/setInfo', data);
           // 将数据存储在本地
-          storage.set('userInfo', data)
+          storage.set('userInfo', store.state.userInfo)
           router.replace({ path: '/home' })
           msg = '登录成功'
         } else {

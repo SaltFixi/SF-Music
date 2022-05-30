@@ -7,10 +7,12 @@ const baseURL = `http://${ip}:${port}`
 
 const AJAX_baseURL = process.env.NODE_ENV === "development" ? baseURL : ""
 
+
 // 创建一个axios的对象
 const instance = axios.create({
   baseURL: AJAX_baseURL, // baseURL会在发送请求的时候拼接url参数前面
   timeout: 10000,
+  withCredentials: true // 携带用户凭证
 })
 
 // 请求拦截
@@ -36,7 +38,7 @@ instance.interceptors.response.use(
   },
   function (error) {
     // console.log('响应失败，错误为', err.message)
-    // Toast('服务器错误！');
+    Toast('服务器错误！');
     // setTimeout(() => {
     //   window.location.replace(location.href)
     // }, 1000);

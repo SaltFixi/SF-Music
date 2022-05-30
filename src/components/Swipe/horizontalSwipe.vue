@@ -1,24 +1,22 @@
 <template>
-  <van-skeleton title :row="5" :loading="loading">
-    <van-swipe class="my-swipe" :loop="false" :width="w" :show-indicators="false">
-      <van-swipe-item v-for="item in recomList" @click="clickTo(item.id)" :key="item.id">
-        <div class="swipe-item">
-          <div class="img-body">
-            <img :src="item.picUrl" alt="" />
-            <div class="img-stick-lf">
-              <i class="iconfont icon-tingge"></i>
-              <!-- 凡是带有fmt的均在plugin/mixin下 -->
-              <span>{{ fmtPlayCount(item.playCount) }}</span>
-            </div>
-            <div class="img-stick-rg">
-              <van-icon name="play-circle-o" color="#fff" size="22" />
-            </div>
+  <van-swipe class="my-swipe" :loop="false" :width="w" :show-indicators="false">
+    <van-swipe-item v-for="item in recomList" @click="clickTo(item.id)" :key="item.id">
+      <div class="swipe-item">
+        <div class="img-body">
+          <img :src="item.picUrl" alt="" />
+          <div class="img-stick-lf">
+            <i class="iconfont icon-tingge"></i>
+            <!-- 凡是带有fmt的均在plugin/mixin下 -->
+            <span>{{ fmtPlayCount(item.playCount) }}</span>
           </div>
-          <span class="text">{{ item.name }}</span>
+          <div class="img-stick-rg">
+            <van-icon name="play-circle-o" color="#fff" size="22" />
+          </div>
         </div>
-      </van-swipe-item>
-    </van-swipe>
-  </van-skeleton>
+        <span class="text">{{ item.name }}</span>
+      </div>
+    </van-swipe-item>
+  </van-swipe>
 </template>
 
 <script setup>
@@ -30,12 +28,10 @@ defineProps({
   }
 })
 
-const loading = ref(true);
 const w = ref(window.screen.width / 4)
 
 onMounted(() => {
   w.value = parseInt((window.screen.width / 4))
-  loading.value = false
 })
 
 

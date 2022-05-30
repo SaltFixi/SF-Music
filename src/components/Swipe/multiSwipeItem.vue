@@ -1,6 +1,6 @@
 <template>
   <van-swipe-item class="newSong-items">
-    <div class="newSong-item" v-for="item in newSongList" :key="item.id" @click="handlePlaying(item)">
+    <div class="newSong-item" v-for="item in songList" :key="item.id" @click="handlePlaying(item)">
       <div class="newSong-pic">
         <img :src="item.picUrl" alt="">
       </div>
@@ -15,7 +15,7 @@
 <script>
 export default {
   props: {
-    newSongList: {
+    songList: {
       type: Array,
       require: true
     },
