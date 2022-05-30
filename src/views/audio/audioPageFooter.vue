@@ -206,7 +206,6 @@ export default {
       this.$refs.circle.style.left = 0 + 'px'
       this.$refs.currentProgress.style.width = 0 + 'px'
       // 将 songslist 索引号+1，及切换下一首
-      console.log(this.songslist);
       if (this.curSongsIndex !== -1 && this.songslist.length > 1) {
         if (this.curSongsIndex < this.songslist.length - 1) {
           this.$store.commit('setCurSongsIndex', this.curSongsIndex + 1);

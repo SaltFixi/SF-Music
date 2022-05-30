@@ -9,6 +9,7 @@
       </template>
     </topNav>
 
+    <!-- 点击setting图标显示弹窗 -->
     <van-popup v-model:show="showPopup" position="bottom" :style="{ height: '20%' }">
       <van-button class="setting-btn" color="#C3A9F6" block @click="$router.push({ name: 'login' })">切换账号</van-button>
       <van-button class="setting-btn" color="#C3A9F6" block @click="logout">退出登录</van-button>
@@ -106,14 +107,16 @@ export default {
       this.$router.go(0)
     },
     toLoveMusic (id) {
-      const query = {
-        'id': id,
-        'title': this.loveMusic.name,
-        'nickname': this.loveMusic.creator.nickname,
-        'creatorImg': this.loveMusic.creator.avatarUrl,
-        'playCount': this.loveMusic.playCount
+      if (Object.keys(this.loveMusic).length !== 0) {
+        const query = {
+          'id': id,
+          'title': this.loveMusic.name,
+          'nickname': this.loveMusic.creator.nickname,
+          'creatorImg': this.loveMusic.creator.avatarUrl,
+          'playCount': this.loveMusic.playCount
+        }
+        this.$router.push({ name: 'mySongList', query: query })
       }
-      this.$router.push({ name: 'mySongList', query: query })
     },
     toCreatePlaylist ({ id, index }) {
       const query = {

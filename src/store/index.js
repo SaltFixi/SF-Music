@@ -70,10 +70,12 @@ const store = new createStore({
         commit('setPlayingSong', songItem)
         commit('setPlayingSongId', songItem.id)
 
-        const res1 = await getSongUrl(state.playingSongId)
-        state.curMusicUrl = res1.data[0].url
+        const [res1, res2] = await Promise.all([
+          getSongUrl(state.playingSongId),
+          getLyric(state.playingSongId)
+        ])
 
-        const res2 = await getLyric(state.playingSongId)
+        state.curMusicUrl = res1.data[0].url
         // 将拿到的歌词数据处理一下，是个数组第一个数据是当前歌词时间，第二个是当前歌词
         state.lyricList = parseLyric(res2.lrc.lyric)
         // 将当前歌词的持续时长拿来做数组的最后一个值，
@@ -108,11 +110,6 @@ const store = new createStore({
         }
       },
     }),
-    // createPersistedState({
-    //   storage: window.localStorage,
-    //   key: 'userInfo',
-    //   paths: ['userInfo']
-    // })
   ]
 });
 
