@@ -6,7 +6,7 @@ const port = "3000"
 const baseURL = `http://${ip}:${port}`
 const productionURL = 'https://netease-cloud-music-api-woad-nine-61.vercel.app/'
 
-export const AJAX_baseURL = process.env.NODE_ENV === "development" ? baseURL : productionURL
+export const AJAX_baseURL = process.env.NODE_ENV === "development" ? productionURL : productionURL
 
 
 // 创建一个axios的对象
@@ -58,4 +58,4 @@ export async function $post (url, params) {
   return data
 }
 
-export default instance
+export default instance 

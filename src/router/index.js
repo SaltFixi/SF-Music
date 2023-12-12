@@ -1,4 +1,6 @@
-import { createRouter, createWebHistory } from 'vue-router';
+import { createRouter, createWebHistory, createWebHashHistory } from 'vue-router';
+
+const routerHistory = process.env.NODE_ENV === "development" ? createWebHistory() : createWebHashHistory()
 
 // 自动导入modules下的路由
 let modulesRoutes = []
@@ -53,7 +55,7 @@ const routes = [
 ]
 
 export default createRouter({
-  history: createWebHistory(),
+  history: routerHistory,
   routes
 })
 
