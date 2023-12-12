@@ -4,8 +4,9 @@ import { Toast } from 'vant'
 const ip = "localhost"
 const port = "3000"
 const baseURL = `http://${ip}:${port}`
+const productionURL = 'https://netease-cloud-music-api-woad-nine-61.vercel.app/'
 
-const AJAX_baseURL = process.env.NODE_ENV === "development" ? baseURL : ""
+export const AJAX_baseURL = process.env.NODE_ENV === "development" ? baseURL : productionURL
 
 
 // 创建一个axios的对象
@@ -42,7 +43,7 @@ instance.interceptors.response.use(
     // setTimeout(() => {
     //   window.location.replace(location.href)
     // }, 1000);
-    console.log(error);
+    // console.log(error);
     return Promise.reject(error)
   }
 )
